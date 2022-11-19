@@ -1,9 +1,7 @@
-﻿using Mastercam.Curves;
+﻿using Mastercam.IO;
 using Mastercam.Database.Types;
 using Mastercam.GeometryUtility;
-using Mastercam.IO;
-using Mastercam.Support;
-using System.Collections.Generic;
+
 
 namespace eMastercamRateMyCode
 {

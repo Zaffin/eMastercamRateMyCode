@@ -1,7 +1,8 @@
-﻿using Mastercam.Curves;
-using Mastercam.Database;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
+
+using Mastercam.Curves;
+
 
 namespace eMastercamRateMyCode
 {
@@ -90,12 +91,12 @@ namespace eMastercamRateMyCode
                 var isPair = (nextIndex < lines.Count() - 1);
 
                 var lineOne = lines[index];
-                geometry.CreateLine(new Crease(lineOne));
+                geometry.CreateLine(lineOne);
 
                 if (isPair)                
                 {
                     var lineTwo = lines[nextIndex];
-                    geometry.CreateLine(new Crease(lineTwo));
+                    geometry.CreateLine(lineTwo);
                     index++;
                 }
             }

@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityData.cs" />
-    <Compile Include="Crease.cs" />
     <Compile Include="GeometryUtilities.cs" />
     <Compile Include="LevelData.cs" />
     <Compile Include="Point2D.cs" />

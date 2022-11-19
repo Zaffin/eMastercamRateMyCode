@@ -1,17 +1,6 @@
 ﻿using Mastercam.App;
 using Mastercam.App.Types;
-using Mastercam.Curves;
-using Mastercam.Database;
-using Mastercam.Database.Types;
-using Mastercam.GeometryUtility;
-using Mastercam.IO;
-using Mastercam.Math;
-using Mastercam.Support;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace eMastercamRateMyCode
 {

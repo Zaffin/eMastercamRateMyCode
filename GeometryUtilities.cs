@@ -1,24 +1,20 @@
-﻿using Mastercam.Curves;
-using Mastercam.Database;
-using Mastercam.Database.Types;
+﻿using System.Linq;
+using System.Collections.Generic;
+
 using Mastercam.Math;
 using Mastercam.Support;
-using System.Collections.Generic;
-using System.Linq;
+using Mastercam.Curves;
+using Mastercam.Database;
+using Mastercam.Database.Types;
+
 
 namespace eMastercamRateMyCode
 {
     internal class GeometryUtilities
     {
-        public bool CreateLine(Crease crease, bool isSelected = true)
+        public bool CreateLine(LineGeometry line, bool isSelected = true)
         {
-            var lowerPoint = new Point3D(crease.StartPoint.X, crease.StartPoint.Y, 0.0);
-            var upperPoint = new Point3D(crease.Endpoint.X, crease.Endpoint.Y, 0.0);
-            var line = new LineGeometry(lowerPoint, upperPoint)
-            {
-                Selected = isSelected
-            };
-
+            line.Selected = isSelected;
             return line.Commit();         
         }
 
