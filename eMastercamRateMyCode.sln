@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eMastercamRateMyCode", "eMastercamRateMyCode.csproj", "{50D1A8E9-7DA4-4F18-A57F-0A3697A2E079}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50D1A8E9-7DA4-4F18-A57F-0A3697A2E079}.Debug|x64.ActiveCfg = Debug|x64
+		{50D1A8E9-7DA4-4F18-A57F-0A3697A2E079}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A8A6B22-7B29-4478-8A8F-FB8FB16C17FF}
+	EndGlobalSection
+EndGlobal
