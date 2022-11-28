@@ -8,8 +8,8 @@ namespace eMastercamRateMyCode
 {
     internal class UtilitiesFacade
     {
-        private SelectionUtilities selection;
-        private GeometryUtilities geometry;
+        private readonly SelectionUtilities selection;
+        private readonly GeometryUtilities geometry;
 
         public UtilitiesFacade()
         {
@@ -30,17 +30,24 @@ namespace eMastercamRateMyCode
 
             foreach (var chain in geometry.ChainAllByLevel(cutChainlevel))
             {
-                geometry.OffsetChainRight(chain, lower.SmallOffsetRadius);
-                geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);
 
-                geometry.ProcessResultLines(lower.ColorID);
-                selection.MoveSelectedToLevel(lower.Level.Number);
+                var lowerChainRight = geometry.OffsetChainRight(chain, lower.SmallOffsetRadius);
+                var lowerChainLeft = geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);
 
-                geometry.OffsetChainLeft(chain, upper.SmallOffsetRadius);
-                geometry.OffsetChainRight(chain, upper.LargeOffsetRadius);
+                geometry.ProcessChain(lowerChainRight, lower.Level.Number, lower.ColorID);
+                geometry.ProcessChain(lowerChainLeft, lower.Level.Number, lower.ColorID);
 
-                geometry.ProcessResultLines(upper.ColorID);
-                selection.MoveSelectedToLevel(upper.Level.Number);
+                //geometry.ProcessResultLines(lower.ColorID);
+                //selection.MoveSelectedToLevel(lower.Level.Number);
+
+                var upperChainLeft = geometry.OffsetChainLeft(chain, upper.SmallOffsetRadius);
+                var upperChainRight = geometry.OffsetChainRight(chain, upper.LargeOffsetRadius);
+
+                geometry.ProcessChain(upperChainRight, upper.Level.Number, upper.ColorID);
+                geometry.ProcessChain(upperChainLeft, upper.Level.Number, upper.ColorID);
+
+                //geometry.ProcessResultLines(upper.ColorID);
+                //selection.MoveSelectedToLevel(upper.Level.Number);
             }
         }
 

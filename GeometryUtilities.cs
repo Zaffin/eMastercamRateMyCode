@@ -18,6 +18,26 @@ namespace eMastercamRateMyCode
             return line.Commit();         
         }
 
+        public List<LineGeometry> ProcessChain(Chain chain, int level, int colorID, bool isSelected = true)
+        {
+            var lines = new List<LineGeometry>();
+     
+            foreach (var geometryEntity in ChainManager.GetGeometryInChain(chain))
+            {
+                if (geometryEntity is LineGeometry line)
+                {
+                    line.Level = level;
+                    line.Color = colorID;
+                    line.Selected = isSelected;
+
+                    if (line.Commit())
+                        lines.Add(line);
+                }
+            }
+
+            return lines;
+        }
+
         public List<LineGeometry> ProcessResultLines(int colorID, bool isSelected = true)
         {
             var lines = new List<LineGeometry>();
