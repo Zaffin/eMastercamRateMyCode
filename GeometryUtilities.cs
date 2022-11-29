@@ -18,7 +18,15 @@ namespace eMastercamRateMyCode
             return line.Commit();         
         }
 
-        public List<LineGeometry> ProcessChain(Chain chain, int level, int colorID, bool isSelected = true)
+        /// <summary>
+        /// Extracts the lines from a chain.
+        /// </summary>
+        /// <param name="chain"> The chain to process.</param>
+        /// <param name="level"> The level to place the extracted lines on.</param>
+        /// <param name="colorID"> The color to apply to the extracted lines.</param>
+        /// <param name="commit"> Optional. True to commit the extracted lines to the database.</param>
+        /// <returns>A list containing the extracted lines. </returns>
+        public List<LineGeometry> ProcessLinesInChain(Chain chain, int level, int colorID, bool commit = false)
         {
             var lines = new List<LineGeometry>();
      
@@ -28,10 +36,11 @@ namespace eMastercamRateMyCode
                 {
                     line.Level = level;
                     line.Color = colorID;
-                    line.Selected = isSelected;
 
-                    if (line.Commit())
-                        lines.Add(line);
+                    if (commit)
+                        line.Commit();
+
+                    lines.Add(line);
                 }
             }
 

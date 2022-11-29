@@ -19,10 +19,6 @@ namespace eMastercamRateMyCode
 
         public void OffsetCutChain(int cutChainlevel, EntityData lower, EntityData upper)
         {
-            selection.UnselectAll();
-            selection.TurnOffVisibleLevels();
-
-            selection.SetMainLevel(cutChainlevel);
 
             selection.CreateLevel(lower.Level.Number, lower.Level.Name);
 
@@ -30,25 +26,20 @@ namespace eMastercamRateMyCode
 
             foreach (var chain in geometry.ChainAllByLevel(cutChainlevel))
             {
-
                 var lowerChainRight = geometry.OffsetChainRight(chain, lower.SmallOffsetRadius);
-                var lowerChainLeft = geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);
+                geometry.ProcessLinesInChain(lowerChainRight, lower.Level.Number, lower.ColorID);
 
-                geometry.ProcessChain(lowerChainRight, lower.Level.Number, lower.ColorID);
-                geometry.ProcessChain(lowerChainLeft, lower.Level.Number, lower.ColorID);
-
-                //geometry.ProcessResultLines(lower.ColorID);
-                //selection.MoveSelectedToLevel(lower.Level.Number);
+                var lowerChainLeft = geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);         
+                geometry.ProcessLinesInChain(lowerChainLeft, lower.Level.Number, lower.ColorID);
+            
+                var upperChainRight = geometry.OffsetChainRight(chain, upper.LargeOffsetRadius);
+                geometry.ProcessLinesInChain(upperChainRight, upper.Level.Number, upper.ColorID);
 
                 var upperChainLeft = geometry.OffsetChainLeft(chain, upper.SmallOffsetRadius);
-                var upperChainRight = geometry.OffsetChainRight(chain, upper.LargeOffsetRadius);
-
-                geometry.ProcessChain(upperChainRight, upper.Level.Number, upper.ColorID);
-                geometry.ProcessChain(upperChainLeft, upper.Level.Number, upper.ColorID);
-
-                //geometry.ProcessResultLines(upper.ColorID);
-                //selection.MoveSelectedToLevel(upper.Level.Number);
+                geometry.ProcessLinesInChain(upperChainLeft, upper.Level.Number, upper.ColorID);
             }
+
+            selection.ClearGroupColors();
         }
 
         public (bool wasGeometryCreated, List<LineGeometry> lowerLines, List<LineGeometry> upperLines) OffsetCreaseChain(int creaseChainlevel, EntityData lower, EntityData upper)
@@ -67,20 +58,24 @@ namespace eMastercamRateMyCode
 
             foreach (var chain in geometry.ChainAllByLevel(creaseChainlevel))
             {
-                geometry.OffsetChainLeft(chain, lower.SmallOffsetRadius);
-                geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);
+                var lowerChainLeftSmall = geometry.OffsetChainLeft(chain, lower.SmallOffsetRadius);
+                lowerLines.AddRange(geometry.ProcessLinesInChain(lowerChainLeftSmall, lower.Level.Number, lower.ColorID));
 
-                geometry.OffsetChainRight(chain, lower.SmallOffsetRadius);
-                geometry.OffsetChainRight(chain, lower.LargeOffsetRadius);
+                var lowerChainLeftLarge = geometry.OffsetChainLeft(chain, lower.LargeOffsetRadius);
+                lowerLines.AddRange(geometry.ProcessLinesInChain(lowerChainLeftLarge, lower.Level.Number, lower.ColorID));
 
-                lowerLines = geometry.ProcessResultLines(lower.ColorID);
-                selection.MoveSelectedToLevel(lower.Level.Number);
+                var lowerChainRightSmall = geometry.OffsetChainRight(chain, lower.SmallOffsetRadius);
+                lowerLines.AddRange(geometry.ProcessLinesInChain(lowerChainRightSmall, lower.Level.Number, lower.ColorID));
 
-                geometry.OffsetChainLeft(chain, upper.LargeOffsetRadius);
-                geometry.OffsetChainRight(chain, upper.SmallOffsetRadius);
+                var lowerChainRightLarge = geometry.OffsetChainRight(chain, lower.LargeOffsetRadius);
+                lowerLines.AddRange(geometry.ProcessLinesInChain(lowerChainRightSmall, lower.Level.Number, lower.ColorID));
 
-                upperLines = geometry.ProcessResultLines(upper.ColorID);
-                selection.MoveSelectedToLevel(upper.Level.Number);
+
+                var upperChainRightLarge = geometry.OffsetChainLeft(chain, upper.LargeOffsetRadius);
+                upperLines.AddRange(geometry.ProcessLinesInChain(upperChainRightLarge, lower.Level.Number, lower.ColorID));
+
+                var upperChainRightSmall = geometry.OffsetChainRight(chain, upper.SmallOffsetRadius);
+                upperLines.AddRange(geometry.ProcessLinesInChain(upperChainRightSmall, lower.Level.Number, lower.ColorID));
             }
 
             if (lowerLines.Any() && upperLines.Any())
@@ -108,7 +103,6 @@ namespace eMastercamRateMyCode
                 }
             }
 
-            geometry.ProcessResultLines(data.ColorID);
             selection.MoveSelectedToLevel(data.Level.Number);
         }
     }

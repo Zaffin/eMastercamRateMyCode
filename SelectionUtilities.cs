@@ -54,6 +54,12 @@ namespace eMastercamRateMyCode
                 GraphicsManager.ClearColors(new GroupSelectionMask(true));
 
             return numberOfEntsCopied;
-        }     
+        }   
+        
+        public void ClearGroupColors()
+        {
+            GraphicsManager.ClearColors(new GroupSelectionMask(true));
+            GraphicsManager.Repaint(true);
+        }
     }
 }
